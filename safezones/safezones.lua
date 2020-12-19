@@ -62,8 +62,8 @@ CreateThread(function()
 				SetVehicleMaxSpeed(GetVehiclePedIsIn(ped, false),11001.5)
 				SetEntityInvincible(ped, false)
 				SetEntityInvincible(PlayerId(), false)
-				SetEntityCanBeDamaged(ped, false)
-				NetworkSetFriendlyFireOption(false)
+				SetEntityCanBeDamaged(ped, true)
+				NetworkSetFriendlyFireOption(true)
 			end
 			Wait(ticks)
 			ticks = 500
