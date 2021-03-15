@@ -1,4 +1,3 @@
--- Asta ar trebuii sa faca nativele sa se execute mai repede.
 local CreateThread = Citizen.CreateThread
 local isPressed = IsDisabledControlJustPressed
 
@@ -20,9 +19,7 @@ local function Draw3DText(x,y,z, text,font,scl)
         DrawText(_x,_y)
     end
 end
-config = { 
-    -- format: [nume interior] = {posJoin = vector3(x,y,z),posLeave = vector3(x,y,z)}
-    -- x,y,z = coordonatele din K
+local config = { 
     ['Arsenal Politie'] = {
         posJoin = vector3(452.50872802734,-982.56115722656,30.689596176147),
         posLeave = vector3(453.71450805664,-982.69616699219,30.689594268799)
@@ -41,16 +38,19 @@ CreateThread(function()
     local ticks = 500
     while true do
         ped = PlayerPedId()
+        coords = GetEntityCoords(ped)
         for i,v in pairs(config) do
             --print(#(GetEntityCoords(ped) - v.posJoin)) [[ debug pentru distanta dintre vectori ]]
-            if #(GetEntityCoords(ped) - v.posJoin) < 1.0 then
+            distanceJoin = #(coords - v.posJoin) 
+            distanceLeave = #(coords - v.posLeave)
+            if distanceJoin < 1.0 then
                 ticks = 1
                 Draw3DText(v.posJoin[1], v.posJoin[2], v.posJoin[3], 'Apasa ~g~E~w~ pentru a intra in ~r~'..i,0,0.4) 
                 DrawMarker(1, v.posJoin[1], v.posJoin[2], v.posJoin[3]-1.3, 0, 0, 0, 0, 0, 0, 1.0,1.0,0.5, 255,255,255, 200, 0, 0, 2, 0, 0, 0, 0)
                 if isPressed(0,38) then
                     SetEntityCoords(ped,v.posLeave)
                 end
-            elseif #(GetEntityCoords(ped) - v.posLeave) < 1.0 then
+            elseif distanceLeave < 1.0 then
                 ticks = 1
                 Draw3DText(v.posLeave[1], v.posLeave[2], v.posLeave[3], 'Apasa ~g~E~w~ pentru a iesii din ~r~'..i,0,0.4) 
                 DrawMarker(1, v.posLeave[1], v.posLeave[2], v.posLeave[3]-1.3, 0, 0, 0, 0, 0, 0, 1.0,1.0,0.5, 255,255,255, 200, 0, 0, 2, 0, 0, 0, 0)
