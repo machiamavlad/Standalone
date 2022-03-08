@@ -33,7 +33,7 @@ CreateThread(function()
 			if (inSafeZone) then
 				ticks = 1
 				-- print(cacat)
-				drawText(0.5,0.005,0.5,'Te aflii in ~g~SafeZone',7,false)
+				drawText(0.5,0.005,0.5,'Te afli in ~g~SafeZone',7,false)
 	
 				DisableControlAction(0,24,true)
 				DisableControlAction(0,25,true)
